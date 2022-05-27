@@ -1,0 +1,152 @@
+@import "variable"; 
+
+.container {
+  width: 100%;
+  max-width: 1140px;
+}
+%heading {
+  color: $heading;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 26px;
+}
+%heading-24 {
+  color: $font-black;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 26px;
+
+}
+// button
+%button-orange {
+  background: $orange;
+  border-radius: 50px;
+  color: $white;
+  font-weight: 400;
+  line-height: 30px;
+  text-align: center;
+  &:hover {
+    box-shadow: 2px 2px 3px 0 $form-input-placeholder;
+  }
+  &:active {
+    box-shadow: 1px 1px 3px 0 $form-input-placeholder;
+    transform: translate(1px 1px);
+    transition: .1s ease-in-out;
+  }
+}
+%button-white {
+  background: $white;
+  border: 1px solid $orange;
+  border-radius: 50px;
+  color: $orange;
+  font-weight: 400;
+  line-height: 30px;
+  text-align: center;
+  &:hover {
+    box-shadow: 2px 2px 1px 0 $form-input-placeholder;
+  }
+
+  &:active {
+    box-shadow: 1px 1px 1px 0 $form-input-placeholder;
+    transform: translate(1px 1px);
+    transition: .1s ease-in-out;
+  }
+}
+// form input
+%input-block {
+  width: 356px;
+  height: 52px;
+  background: $form-input-grey;
+  border-radius: 0px 0px 4px 4px;
+  margin-top: 32px;
+  position: relative;
+}
+%input-bottom {
+  width: 356px;
+  height: 2px;
+  background: $form-input-border;
+  border-radius: 0px 0px 4px 4px;
+  position: absolute;
+  bottom: 0;
+}
+%form-label {
+  color: $form-label;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  padding: 2px 10.6px 0 10.6px;
+}
+%form-input {
+  font-size: 16px;
+  line-height: 26px;
+  color: $form-input;
+  padding: 0 10.6px 2px 10.6px;
+}
+%single-ellipsis{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+} 
+// tweet list
+%tweet-name {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 26px;
+  color: $font-black;
+}
+%tweet-account {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  color: $font-small;
+}
+%tweet-text {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+  color: $font-black;
+}
+%tweet-text-warning {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 15px;
+  color: $modal-alert;
+}
+%avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+%icon-24 {
+  width: 24px;
+  height: 24px;
+}
+%icon-30 {
+  width: 30px;
+  height: 30px;
+}
+%focus{
+  border-bottom: 2px solid #50B5FF;
+}
+%warning{
+  border-bottom: 2px solid #FC5A5A;
+}
+// scrollbar
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+// follow button
+%following{
+  @extend %button-orange;
+  width: 96px;
+  height:40px;
+}
+%follow {
+  @extend %button-white;;
+    width: 64px;
+    height: 40px;
+}
+
+
