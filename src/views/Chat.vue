@@ -1,12 +1,15 @@
 <template>
   <div class="container">
-    <div>
+    <div class="row">
+      <div class="col-4">
       <UserList />
-    </div>
-     <div>
-      <UserChat />
-    </div>
+      </div>
+      <div class="col-8">
+        <UserChat />
+      </div>
 
+    </div>
+    
   </div>
 </template>
 <script>
