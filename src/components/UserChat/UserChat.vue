@@ -8,8 +8,11 @@
           </template>
         </Title>
       </div>
-      <div class="user__chat--container">
-        <div class="user__chat--content">
+      <div class="user__chat--container ">
+        <div class="user__chat--content scrollbar">
+        <UserStatus />
+        <UserReceive />
+        <UserSend />
         <UserStatus />
         <UserReceive />
         <UserSend />
@@ -69,5 +72,9 @@ export default {
   display: flex;
   flex-flow: column;
   height: calc(100vh - 80px);
+}
+.scrollbar { 
+  height: calc(100vh - 144px);
+  overflow: scroll;
 }
 </style>
