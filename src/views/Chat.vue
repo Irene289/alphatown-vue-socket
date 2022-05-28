@@ -2,12 +2,11 @@
   <div class="container">
     <div class="row">
       <div class="col-4">
-      <UserList />
+        <UserList />
       </div>
       <div class="col-8">
         <UserChat />
       </div>
-
     </div>
     
   </div>

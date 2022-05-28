@@ -15,7 +15,6 @@
   font-size: 24px;
   font-weight: 700;
   line-height: 26px;
-
 }
 // button
 %button-orange {
@@ -130,6 +129,10 @@
 }
 %warning{
   border-bottom: 2px solid #FC5A5A;
+}
+
+%bottom-line{
+  border-bottom: 1px solid $border-grey;
 }
 // scrollbar
 ::-webkit-scrollbar {
