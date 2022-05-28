@@ -10,7 +10,7 @@
  @import "../assets/scss/_basic.scss";
   .title__content{
     padding: 24px;
-    color: #41BC3F;
+    color: #44444F;
     height: 80px;
     font-size: 24px;;
     font-weight: 700;

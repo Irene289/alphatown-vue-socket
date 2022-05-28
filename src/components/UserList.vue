@@ -42,8 +42,7 @@ export default {
 <style lang="scss" scoped>
  @import "../assets/scss/_basic.scss";
   .user__list {
-    border: 1px solid $border-grey;
-    border-right: 0;
+    border-left: 1px solid $border-grey;
     height: 100vh;
   }
   .title__container {
