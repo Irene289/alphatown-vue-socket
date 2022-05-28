@@ -8,15 +8,14 @@
         <UserChat />
       </div>
     </div>
-    
   </div>
 </template>
 <script>
-import UserList from '../components/UserList.vue'
-import UserChat from '../components/UserChat.vue'
+import UserList from "../components/UserList.vue";
+import UserChat from "../components/UserChat/UserChat.vue";
 export default {
-  name:'Chat',
-  components:{
+  name: "Chat",
+  components: {
     UserList,
     UserChat
   }
