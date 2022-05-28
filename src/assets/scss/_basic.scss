@@ -153,4 +153,28 @@
     height: 40px;
 }
 
-
+// chat room
+%user-receive {
+  background: $border-grey;
+  color: $heading;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  border-radius: 25px 25px 25px 0px;
+  padding: 10px 15px 15px 15px;
+}
+%user-send {
+  background: $orange;
+  color: $white;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  border-radius: 25px 25px 0px 25px;
+  padding: 10px 15px 15px 15px;
+}
+%user-chat-time {
+  color: $form-input-border;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 13px;
+}
