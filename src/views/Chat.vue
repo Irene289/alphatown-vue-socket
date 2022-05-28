@@ -24,3 +24,9 @@ export default {
   
 }
 </script>
+<style lang="scss" scoped>
+  .row > *{
+    padding:0;
+    margin: 0;
+  }
+</style>
