@@ -2,25 +2,22 @@
   <div class="container">
     <div class="row">
       <div class="col-4">
-      <UserList />
+        <UserList />
       </div>
       <div class="col-8">
         <UserChat />
       </div>
-
     </div>
-    
   </div>
 </template>
 <script>
-import UserList from '../components/UserList.vue'
-import UserChat from '../components/UserChat.vue'
+import UserList from "../components/UserList.vue";
+import UserChat from "../components/UserChat/UserChat.vue";
 export default {
-  name:'Chat',
-  components:{
+  name: "Chat",
+  components: {
     UserList,
-    UserChat
-  }
-  
-}
+    UserChat,
+  },
+};
 </script>
