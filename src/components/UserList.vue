@@ -4,7 +4,7 @@
       <Title>
         <template v-slot:title>
           <div class="title__container">
-            <img src="../assets/static/images/navLogo@2x.png" alt="">
+            <img src="../assets/static/images/alphaTown.png" alt="">
             <p>上線使用者(5)</p>
           </div>                
         </template>
@@ -50,11 +50,11 @@ export default {
     display: flex;
     align-items: center;
     height: 100%;
-    img{
-      width: 40px;
-      height: 40px;
+    img {
+      width: 60px;
+      height: 50px;
     }
-    p{
+    p {
       margin-left: 1rem;
     }
   }
