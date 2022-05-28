@@ -2,15 +2,16 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Signin from '../views/Signin'
 import NotFound from '../views/NotFound'
+import Chat from '../views/Chat.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'signIn',
-    component: Signin
-  },
+    name: 'home',
+    component: Chat
+  }
   {
     path: '/signin',
     name: 'sign-in',
@@ -21,11 +22,6 @@ const routes = [
     name: 'sign-up',
     component: () => import('../views/Signup.vue')
   },
-  // {
-  //   path: '/chat',
-  //   name: 'chat',
-  //   component: Chat
-  // },
   {
     path: '*',
     name: 'not-found',
