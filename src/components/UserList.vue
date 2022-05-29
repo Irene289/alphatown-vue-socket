@@ -4,7 +4,7 @@
       <Title>
         <template v-slot:title>
           <div class="title__container">
-            <img src="../assets/static/images/alphaTown.png" alt="">
+            <img src="../assets/static/images/alphaTown2.png" alt="">
             <p>上線使用者(5)</p>
           </div>                
         </template>
@@ -51,7 +51,7 @@ export default {
     height: 100%;
     img {
       width: 60px;
-      height: 50px;
+      height: 60px;
     }
     p {
       margin-left: 1rem;

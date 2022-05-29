@@ -1,7 +1,7 @@
 <template>
   <div class="user__chat--receive">
     <div class="user__chat--receive-img">
-      <img src="../../assets/static/images/logo@2x.jpg" alt="">
+      <img src="../../assets/static/images/alphaTown2.png" alt="">
     </div>
     <div class="user__chat--receive-content">
       <p class="content-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus debitis dicta velit non nihil dignissimos perferendis nam quaerat, vel blanditiis ex? Nobis quidem necessitatibus delectus laborum ab quasi nihil corrupti.
