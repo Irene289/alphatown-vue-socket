@@ -4,7 +4,7 @@
       <Title>
         <template v-slot:title>
           <div class="title__container">
-            <img src="../assets/static/images/navLogo@2x.png" alt="">
+            <img src="../assets/static/images/alphaTown2.png" alt="">
             <p>上線使用者(5)</p>
           </div>                
         </template>
@@ -42,19 +42,18 @@ export default {
 <style lang="scss" scoped>
  @import "../assets/scss/_basic.scss";
   .user__list {
-    border: 1px solid $border-grey;
-    border-right: 0;
+    border-left: 1px solid $border-grey;
     height: 100vh;
   }
   .title__container {
     display: flex;
     align-items: center;
     height: 100%;
-    img{
-      width: 40px;
-      height: 40px;
+    img {
+      width: 60px;
+      height: 60px;
     }
-    p{
+    p {
       margin-left: 1rem;
     }
   }

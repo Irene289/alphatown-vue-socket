@@ -11,7 +11,7 @@ const routes = [
     path: '/',
     name: 'home',
     component: Chat
-  }
+  },
   {
     path: '/signin',
     name: 'sign-in',
