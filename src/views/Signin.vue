@@ -2,12 +2,16 @@
   <div class="container">
     <InputTitle>
       <template v-slot:title>
-        <h1 class="title-text">登入 Alphitter</h1>
+        <h1 class="title-text">Alpha Town</h1>
       </template>
       <template> </template>
     </InputTitle>
 
-    <form class="form-items" action="">
+    <form 
+      class="form-items" action=""
+      autocomplete="off"
+      @submit.stop.prevent="handleSubmit"
+    >
 
       <InputForm v-for="item in items" :key="item.id">
         <template v-slot:input>
@@ -27,9 +31,11 @@
       
       <!-- btn -->
       <div class="form-btns">
-        <button class="form-btn" type="submit">按鈕</button>
+        <button class="form-btn" type="submit">
+          {{ isProcessing ? '處理中' : '登入' }}
+        </button>
         <div class="form-cancel">
-          <router-link class="form-cancel-btn" to="/signin"> 取消 </router-link>
+          <router-link class="form-cancel-btn" to="/signup"> 註冊 </router-link>
         </div>
       </div>
       
@@ -40,6 +46,8 @@
 <script>
 import InputTitle from "../components/InputTitle";
 import InputForm from "../components/InputForm.vue";
+import authorizationAPI from './../apis/authorization'
+import { Toast } from './../utils/helpers'
 
 export default {
   name: "Signin",
@@ -67,8 +75,48 @@ export default {
           model: ''
         },
       ],
+      isProcessing: false
     };
   },
+  methods: {
+    async handleSubmit() {
+      if (!this.items[0].model || !this.items[1].model) {
+        Toast.fire({
+          icon: 'warning',
+          title: '請輸入帳密'
+        })
+        return
+      }
+      try {
+        this.isProcessing = true
+        const { data, statusText } = await authorizationAPI.signIn({
+          account: this.items[0].model,
+          password: this.items[1].model
+        })
+        
+        if (statusText !== 'OK') {
+          throw new Error(statusText)
+        }
+
+        localStorage.setItem('token', data.data.token)
+        this.$store.commit('setCurrentUser', data.data.user)
+
+        this.isProcessing = false
+        Toast.fire({
+          icon: 'success',
+          title: '登入成功'
+        })
+        this.$router.push('/chat')
+      } catch (error) {
+        this.isProcessing = false
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '帳號/密碼輸入錯誤，請重新輸入'
+        })
+      }
+    }
+  }
 };
 </script>
 
