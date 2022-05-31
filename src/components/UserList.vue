@@ -21,7 +21,10 @@
         <UserCard/>
         <UserCard/>
     </div>
-    <div class="log-out-container">
+    <div 
+      class="log-out-container"
+      @click.stop.prevent ="onClickLogout"
+    >
       <img class="hover-show" src="../assets/static/images/orangeLogout@2x.png" alt="">
       <img class="hover-hidden" src="../assets/static/images/logout@2x.png" alt="">
       <p>登出</p>
@@ -35,6 +38,14 @@ export default {
   components: {
     Title,
     UserCard
+  },
+  methods: {
+    // 登出
+    onClickLogout() {
+      this.$store.commit("revokeAuthentication");
+      localStorage.removeItem("token");
+      this.$router.push("/signin");
+    }
   }
   
 }

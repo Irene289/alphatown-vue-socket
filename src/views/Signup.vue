@@ -41,6 +41,7 @@
 import InputTitle from "../components/InputTitle";
 import InputForm from "../components/InputForm.vue";
 import authorizationAPI from "../api/authorization"
+// import userAPI from "../api/user"
 import {Toast} from "../utils/helpers"
 
 export default {
@@ -122,10 +123,15 @@ export default {
         if(data.status !== 'success'){
           throw new Error (data.data.message)
         } 
+        const token = data.data.token
+        //註冊後直接導向首頁
+        localStorage.setItem('token', token)
+        this.$store.commit('setToken', token)
+        this.$router.push('/')        
         this.isProcessing = false     
       }catch(error){
         this.isProcessing = false   
-        //重物註冊 
+        //重複註冊 
         if (error.response.status === 409){
             Toast.fire({
             icon: 'warning',
@@ -138,8 +144,7 @@ export default {
             title: error.response.data.message
           })
         }       
-      }
-      
+      }      
     }
   }
 };
