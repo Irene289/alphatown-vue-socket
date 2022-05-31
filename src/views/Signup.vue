@@ -68,14 +68,6 @@ export default {
         },
         {
           id: 3,
-          label: "Email",
-          name: "email",
-          type: "email",
-          placeholder: "請輸入 Email",
-          model: ''
-        },
-        {
-          id: 4,
           label: "密碼",
           name: "password",
           type: "password",
@@ -83,7 +75,7 @@ export default {
           model: ''
         },
         {
-          id: 5,
+          id: 4,
           label: "密碼確認",
           name: "password",
           type: "password",

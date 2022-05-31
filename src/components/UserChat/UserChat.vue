@@ -13,9 +13,6 @@
         <UserStatus />
         <UserReceive />
         <UserSend />
-        <UserStatus />
-        <UserReceive />
-        <UserSend />
         </div>
         <div class="user__chat--input">
           <UserInput />
@@ -75,6 +72,6 @@ export default {
 }
 .scrollbar { 
   height: calc(100vh - 144px);
-  overflow: scroll;
+  overflow-y: scroll;
 }
 </style>
