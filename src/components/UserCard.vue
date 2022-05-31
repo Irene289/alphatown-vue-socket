@@ -34,6 +34,5 @@ export default {
       @extend %tweet-account;
       vertical-align: baseline;
     }
-    
   }
 </style>

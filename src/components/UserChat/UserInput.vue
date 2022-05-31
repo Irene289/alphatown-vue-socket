@@ -14,7 +14,6 @@ export default {
 <style lang="scss" scoped>
 @import "../../assets/scss/basic.scss";
 .user__chat--input {
-  // max-width: 698px;
   width: 100%;
   height: 64px;
   border-top: 1px solid #e6ecf0;

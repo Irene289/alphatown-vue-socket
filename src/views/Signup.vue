@@ -127,7 +127,7 @@ export default {
         //註冊後直接導向首頁
         localStorage.setItem('token', token)
         this.$store.commit('setToken', token)
-        this.$router.push('/')        
+        this.$router.push('/chat')        
         this.isProcessing = false     
       }catch(error){
         this.isProcessing = false   

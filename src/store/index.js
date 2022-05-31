@@ -69,6 +69,7 @@ export default new Vuex.Store({
           account,
           avatar: avatar ? avatar : require('../assets/static/images/alphaTown2.png')
         })
+        //切換是否取得當前用戶資料的狀態（註冊後自動登入用）
         commit('getCurrentUserStatus', true)
         return true
       }catch(error){

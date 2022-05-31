@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Signin from '../views/Signin'
-import NotFound from '../views/NotFound'
-import Chat from '../views/Chat.vue'
 import store from '../store'
+import NotFound from '../views/NotFound'
+import Signin from '../views/Signin'
+import Chat from '../views/Chat.vue'
 import {Toast} from '../utils/helpers'
 
 Vue.use(VueRouter)
@@ -11,8 +11,14 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
+    name: 'root',
+    meta: { requiresAuth: false },
+    component: Signin
+  },
+  {
+    path: '/chat',
+    name: 'chat',
     meta: { requiresAuth: true },
-    name: 'home',
     component: Chat
   },
   {
@@ -41,7 +47,8 @@ router.beforeEach(async(to, from, next) => {
   const storageToken = localStorage.getItem('token')
   const stateToken = store.state.token
   let isAuthenticated = store.state.isAuthenticated
-  let getCurrentUser = store.state.getCurrentUser
+  let getCurrentUser = store.state.getCurrentUser  //判斷是否已取的currentUser
+
   if (to.matched.some(record => record.meta.requiresAuth)){
     //如果已取得token且state的token 和 localStorage的toke不同，那就重新重新打currentUser api獲取資料＆token
     if (storageToken && storageToken !== stateToken) {
@@ -52,26 +59,52 @@ router.beforeEach(async(to, from, next) => {
       next()
       return
     } else {
-      //已經登註冊 但未取的currentUser
+      //已經註冊 但未取的currentUser
       if (isAuthenticated && !getCurrentUser) {
         getCurrentUser = await store.dispatch('fetchCurrentUser')
         //註冊後導向首頁
-        next({ name: 'home' })
+        next({ name: 'chat' })
         return
       } else {
         Toast.fire({
           icon: 'warning',
-          title: '您訪問的頁面需要登入，若尚未註冊，請先註冊在登入'
+          title: '您訪問的頁面需要登入，若尚未註冊，請先註冊'
         })
         next({ path: '/signin' })
         return
       }
-     
     }
   } else {
-    next()
-    return
+    if (isAuthenticated){
+      next('/chat')
+      return
+    } else{
+      next()
+      return
+    }  
   }  
 })
+//有衝突修改為上方，因為有加入註冊後自動導向首頁的功能，所以先採用Seijo原本的作法，如果Irene想修改的話可以再改
+// TODO: fetchCurrentUser
+// router.beforeEach((to, from, next) => {
+//   const tokenInLocalStorage = localStorage.getItem('token')
+//   const tokenInStore = store.state.token
+//   let isAuthenticated = store.state.isAuthenticated
+//   const routerNameWithoutAuthentication = ['sign-in', 'sign-up']
+
+//   if (tokenInLocalStorage && tokenInLocalStorage !== tokenInStore) {
+//     isAuthenticated = true
+//   }
+//   if (!isAuthenticated && !routerNameWithoutAuthentication.includes(to.name)) {
+//     next('/signin')
+//     return
+//   }
+//   if (isAuthenticated && routerNameWithoutAuthentication.includes(to.name)) {
+//     next('/chat')
+//     return
+//   }
+  
+//   next()
+// })
 
 export default router

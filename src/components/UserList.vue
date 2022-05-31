@@ -5,20 +5,12 @@
         <template v-slot:title>
           <div class="title__container">
             <img src="../assets/static/images/alphaTown2.png" alt="">
-            <p>上線使用者(5)</p>
+            <p>上線使用者(1)</p>
           </div>                
         </template>
       </Title>     
     </div>
     <div class="user__card__list scrollbar">
-        <UserCard/>
-        <UserCard/>
-        <UserCard/>
-        <UserCard/>
-        <UserCard/>
-        <UserCard/>
-        <UserCard/>
-        <UserCard/>
         <UserCard/>
     </div>
     <div 
@@ -35,6 +27,7 @@
 import Title from '../components/Title.vue'
 import UserCard from '../components/UserCard.vue'
 export default {
+  name: 'UserList',
   components: {
     Title,
     UserCard
@@ -47,7 +40,6 @@ export default {
       this.$router.push("/signin");
     }
   }
-  
 }
 </script>
 <style lang="scss" scoped>
@@ -69,18 +61,19 @@ export default {
     }
   }
   .scrollbar { 
-    height: calc(100vh - 130px);
-    overflow: scroll;
+    height: calc(100vh - 144px);
+    overflow-y: scroll;
   }
   .log-out-container {
-    height: 40px;
+    height: 64px;
     display: flex;
     align-items: center;
-    margin-left: 1rem;
+    border-top: 1px solid #e6ecf0;
     img {
       width: 20px;
       height: 20px;
       margin-right: 1rem;
+      margin-left: 1rem;
     }
     p {
       font-weight: 700;
