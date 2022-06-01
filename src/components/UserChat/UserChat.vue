@@ -10,7 +10,7 @@
       </div>
       <div class="user__chat--container ">
         <div class="user__chat--content scrollbar">
-        <UserStatus />
+        <UserStatus :account="account" />
         <UserReceive />
         <UserSend />
         </div>
@@ -38,6 +38,23 @@ export default {
     UserSend,
     UserInput
   },
+  data() {
+    return {
+      account: ''
+    }
+  },
+  created() {
+    this.fetchUserJoins()
+  },
+  methods: {
+    fetchUserJoins() {
+      console.log('fetchUserJoins')
+      this.$socket.on('user joins', (data) => {
+      console.log(data)
+      this.account = data.data.account
+    })
+    }
+  }
 };
 </script>
 

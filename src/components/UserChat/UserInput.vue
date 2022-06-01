@@ -1,13 +1,34 @@
 <template>
   <div class="user__chat--input">
-    <input type="text" placeholder="輸入訊息...">
-    <button><img src="../../assets/static/images/icon_send@2x.png" alt=""></button>
+    <input v-model="msg" type="text" placeholder="輸入訊息...">
+    <button @click.stop.prevent="msgSend"><img src="../../assets/static/images/icon_send@2x.png" alt=""></button>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex"
+
 export default {
-  name: 'UserInput'
+  name: 'UserInput',
+  data() {
+    return {
+      msg: ''
+    }
+  },
+  methods: {
+    msgSend() {
+      console.log(this.msg)
+      this.$socket.emit('user send message', {
+        id: this.currentUser.id,
+        account: this.currentUser.account,
+        name: this.currentUser.name,
+        avatar: this.currentUser.avatar
+      })
+    }
+  },
+  computed: {
+    ...mapState(["currentUser"])
+  }
 }
 </script>
 

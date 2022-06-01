@@ -48,6 +48,7 @@ import InputTitle from "../components/InputTitle";
 import InputForm from "../components/InputForm.vue";
 import authorizationAPI from './../apis/authorization'
 import { Toast } from './../utils/helpers'
+// import { mapState } from "vuex"
 
 export default {
   name: "Signin",
@@ -78,9 +79,6 @@ export default {
       isProcessing: false
     };
   },
-  // created() {
-  //    this.$socket.open()
-  // },
   methods: {
     async handleSubmit() {
       if (!this.items[0].model || !this.items[1].model) {
@@ -111,15 +109,17 @@ export default {
 
         this.isProcessing = false
 
-        // this.$socket.emit('user login', {
-        //   account: this.items[0].model,
-        //   password: this.items[1].model
-        // })
+        this.$socket.on('online users', (data) => {
+          console.log('data:', data)
+        })
+        console.log(this.$socket)
+        this.$socket.emit('new user', '測試')
 
         Toast.fire({
           icon: 'success',
           title: '登入成功'
         })
+
         // this.$router.push('/chat')
       } catch (error) {
         this.isProcessing = false
@@ -130,7 +130,10 @@ export default {
         })
       }
     }
-  }
+  },
+  // computed: {
+  //   ...mapState(["currentUser"])
+  // }
 };
 </script>
 
