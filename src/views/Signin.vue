@@ -78,6 +78,9 @@ export default {
       isProcessing: false
     };
   },
+  // created() {
+  //    this.$socket.open()
+  // },
   methods: {
     async handleSubmit() {
       if (!this.items[0].model || !this.items[1].model) {
@@ -99,14 +102,25 @@ export default {
         }
 
         localStorage.setItem('token', data.data.token)
-        this.$store.commit('setCurrentUser', data.data.user)
+        this.$store.commit('setCurrentUser', {
+          id: data.data.id,
+          account: data.data.account,
+          name: data.data.name,
+          avatar: data.data.avatar
+        })
 
         this.isProcessing = false
+
+        // this.$socket.emit('user login', {
+        //   account: this.items[0].model,
+        //   password: this.items[1].model
+        // })
+
         Toast.fire({
           icon: 'success',
           title: '登入成功'
         })
-        this.$router.push('/chat')
+        // this.$router.push('/chat')
       } catch (error) {
         this.isProcessing = false
         console.log(error)
