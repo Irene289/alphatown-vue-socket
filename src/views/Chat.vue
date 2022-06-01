@@ -18,8 +18,10 @@ export default {
   components: {
     UserList,
     UserChat
+  },
+  methods: {
+    
   }
-  
 }
 </script>
 <style lang="scss" scoped>
