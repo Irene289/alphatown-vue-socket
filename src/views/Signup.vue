@@ -7,7 +7,7 @@
       <template> </template>
     </InputTitle>
 
-    <form class="form-items" action="">
+    <form class="form-items" action="" @submit.stop.prevent="signUp">
 
       <InputForm v-for="item in items" :key="item.id">
         <template v-slot:input>
@@ -27,7 +27,7 @@
       
       <!-- btn -->
       <div class="form-btns">
-        <button class="form-btn" type="submit">按鈕</button>
+        <button class="form-btn" type="submit">{{isProcessing? '處理中':'註冊'}}</button>
         <div class="form-cancel">
           <router-link class="form-cancel-btn" to="/signin"> 取消 </router-link>
         </div>
@@ -40,15 +40,19 @@
 <script>
 import InputTitle from "../components/InputTitle";
 import InputForm from "../components/InputForm.vue";
+import authorizationAPI from "../api/authorization"
+// import userAPI from "../api/user"
+import {Toast} from "../utils/helpers"
 
 export default {
-  name: "Signin",
+  name: "Signup",
   components: {
     InputTitle,
     InputForm,
   },
   data() {
     return {
+      isProcessing: false,
       items: [
         {
           id: 1,
@@ -77,7 +81,7 @@ export default {
         {
           id: 4,
           label: "密碼確認",
-          name: "password",
+          name: "passwordCheck",
           type: "password",
           placeholder: "請再次輸入密碼",
           model: ''
@@ -85,6 +89,64 @@ export default {
       ],
     };
   },
+  methods:{
+    async signUp(){
+      //避免空白
+      if (
+        !this.items[0].model ||
+        !this.items[1].model ||
+        !this.items[2].model ||
+        !this.items[3].model 
+      ){
+        Toast.fire({
+            icon: 'warning',
+            title: '請填寫完整資料，不可空白'
+          })
+        return 
+      }
+      //密碼比對
+      if ( this.items[2].model !== this.items[3].model){
+         Toast.fire({
+            icon: 'warning',
+            title: '密碼和密碼確認不同，請再次確認'
+          })
+        return 
+      }
+      try{
+        this.isProcessing = true
+        const {data} = await authorizationAPI.signup({
+          account: this.items[0].model,
+          name: this.items[1].model,
+          password: this.items[2].model,
+          passwordCheck: this.items[3].model
+        })
+        if(data.status !== 'success'){
+          throw new Error (data.data.message)
+        } 
+        const token = data.data.token
+        //註冊後直接導向首頁
+        localStorage.setItem('token', token)
+        this.$store.commit('setToken', token)
+        this.$router.push('/chat')        
+        this.isProcessing = false     
+      }catch(error){
+        this.isProcessing = false   
+        //重複註冊 
+        if (error.response.status === 409){
+            Toast.fire({
+            icon: 'warning',
+            title: error.response.data.message
+          })
+        } else {
+          //其他錯誤
+           Toast.fire({
+            icon: 'error',
+            title: error.response.data.message
+          })
+        }       
+      }      
+    }
+  }
 };
 </script>
 
