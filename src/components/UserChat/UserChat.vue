@@ -48,12 +48,23 @@ export default {
   },
   methods: {
     fetchUserJoins() {
-      console.log('fetchUserJoins')
-      this.$socket.on('user joins', (data) => {
-      console.log(data)
-      this.account = data.data.account
-    })
+      // console.log('fetchUserJoins')
+      
     }
+  },
+  sockets: {
+    // connect: function() {
+    //   console.log("連線成功")
+    // },
+    // disconnect(){
+    //   console.log("斷開連線");
+    // },
+    // reconnect(){
+    //   console.log("重新連線");
+    // },
+    // online_users(data) {
+    //   console.log('後端回傳', data)
+    // },
   }
 };
 </script>
