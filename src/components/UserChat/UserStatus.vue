@@ -1,12 +1,23 @@
 <template>
   <div class="user__chat--status">
-    <p class="user__chat--status-item">Esther Howard 上線</p>
+    <p class="user__chat--status-item">{{ accountJoin }} 上線</p>
   </div>
 </template>
 
 <script>
 export default {
   name: "UserStatus",
+  props: {
+    account: {
+      type: String,
+      required: true
+    }
+  },
+  data() {
+    return {
+      accountJoin: this.account
+    }
+  }
 };
 </script>
 
