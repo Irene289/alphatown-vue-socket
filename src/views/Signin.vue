@@ -114,8 +114,8 @@ export default {
         // this.$socket.emit('user login', {
         //   account: this.items[0].model,
         //   password: this.items[1].model
-        // })
-
+        // }) 
+        
         Toast.fire({
           icon: 'success',
           title: '登入成功'
