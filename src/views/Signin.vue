@@ -78,9 +78,6 @@ export default {
       isProcessing: false
     };
   },
-  // created() {
-  //    this.$socket.open()
-  // },
   methods: {
     async handleSubmit() {
       if (!this.items[0].model || !this.items[1].model) {
@@ -111,16 +108,13 @@ export default {
 
         this.isProcessing = false
 
-        // this.$socket.emit('user login', {
-        //   account: this.items[0].model,
-        //   password: this.items[1].model
-        // }) 
-        
+        this.$socket.emit('new_user', data.data)
+
         Toast.fire({
           icon: 'success',
           title: '登入成功'
         })
-        // this.$router.push('/chat')
+        this.$router.push('/chat')
       } catch (error) {
         this.isProcessing = false
         console.log(error)
@@ -130,7 +124,7 @@ export default {
         })
       }
     }
-  }
+  },
 };
 </script>
 

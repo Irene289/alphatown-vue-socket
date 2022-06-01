@@ -10,7 +10,7 @@
       </div>
       <div class="user__chat--container ">
         <div class="user__chat--content scrollbar">
-        <UserStatus />
+        <UserStatus :account="account" />
         <UserReceive />
         <UserSend />
         </div>
@@ -38,6 +38,34 @@ export default {
     UserSend,
     UserInput
   },
+  data() {
+    return {
+      account: ''
+    }
+  },
+  created() {
+    this.fetchUserJoins()
+  },
+  methods: {
+    fetchUserJoins() {
+      // console.log('fetchUserJoins')
+      
+    }
+  },
+  sockets: {
+    // connect: function() {
+    //   console.log("連線成功")
+    // },
+    // disconnect(){
+    //   console.log("斷開連線");
+    // },
+    // reconnect(){
+    //   console.log("重新連線");
+    // },
+    // online_users(data) {
+    //   console.log('後端回傳', data)
+    // },
+  }
 };
 </script>
 

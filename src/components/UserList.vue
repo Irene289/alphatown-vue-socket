@@ -5,13 +5,13 @@
         <template v-slot:title>
           <div class="title__container">
             <img src="../assets/static/images/alphaTown2.png" alt="">
-            <p>上線使用者(1)</p>
+            <p>上線使用者({{ onlineUsers.length }})</p>
           </div>                
         </template>
       </Title>     
     </div>
     <div class="user__card__list scrollbar">
-        <UserCard/>
+        <UserCard />
     </div>
     <div 
       class="log-out-container"
@@ -26,11 +26,23 @@
 <script>
 import Title from '../components/Title.vue'
 import UserCard from '../components/UserCard.vue'
+import {mapState} from 'vuex'
+
 export default {
   name: 'UserList',
   components: {
     Title,
     UserCard
+  },
+  data() {
+    return {
+      users: [],
+      user: {
+        name: '',
+        account: '',
+        avatar: ''
+      }
+    }
   },
   methods: {
     // 登出
@@ -38,7 +50,10 @@ export default {
       this.$store.commit("revokeAuthentication");
       localStorage.removeItem("token");
       this.$router.push("/signin");
-    }
+    },
+  },
+  computed: {
+    ...mapState(['onlineUsers'])
   }
 }
 </script>
