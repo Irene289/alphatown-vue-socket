@@ -48,7 +48,6 @@ import InputTitle from "../components/InputTitle";
 import InputForm from "../components/InputForm.vue";
 import authorizationAPI from './../apis/authorization'
 import { Toast } from './../utils/helpers'
-// import { mapState } from "vuex"
 
 export default {
   name: "Signin",
@@ -109,18 +108,13 @@ export default {
 
         this.isProcessing = false
 
-        this.$socket.on('online users', (data) => {
-          console.log('data:', data)
-        })
-        console.log(this.$socket)
-        this.$socket.emit('new user', '測試')
+        this.$socket.emit('new_user', data.data)
 
         Toast.fire({
           icon: 'success',
           title: '登入成功'
         })
-
-        // this.$router.push('/chat')
+        this.$router.push('/chat')
       } catch (error) {
         this.isProcessing = false
         console.log(error)
@@ -131,9 +125,6 @@ export default {
       }
     }
   },
-  // computed: {
-  //   ...mapState(["currentUser"])
-  // }
 };
 </script>
 

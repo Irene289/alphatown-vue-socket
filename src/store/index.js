@@ -14,7 +14,8 @@ export default new Vuex.Store({
     },
     getCurrentUser: false,
     token: '',
-    isAuthenticated: false
+    isAuthenticated: false,
+    onlineUsers: []
   },
   getters: {
   },
@@ -53,6 +54,9 @@ export default new Vuex.Store({
     },
     setIsLoading(state, data) {
       state.isLoading = data
+    },
+    setOnlineUsers(state, data) {
+      state.onlineUsers = [...data]
     }
   },
   actions: {
