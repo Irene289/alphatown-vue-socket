@@ -17,6 +17,12 @@ export default {
     return {
       accountJoin: this.account
     }
+  },
+  sockets:{
+    user_leaves(data){
+      console.log('logout')
+      console.log(data)
+    }
   }
 };
 </script>

@@ -47,13 +47,22 @@ export default {
   methods: {
     // 登出
     onClickLogout() {
+      const currentUser = {...this.currentUser}
+      console.log(currentUser)
       this.$store.commit("revokeAuthentication");
+      this.$socket.emit('user_logout', currentUser)
       localStorage.removeItem("token");
       this.$router.push("/signin");
     },
   },
   computed: {
-    ...mapState(['onlineUsers'])
+    ...mapState(['onlineUsers','currentUser'])
+  },
+  sockets:{
+    user_leaves(data){
+      console.log('logout')
+      console.log(data)
+    }
   }
 }
 </script>
