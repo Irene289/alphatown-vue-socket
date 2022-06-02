@@ -1,28 +1,45 @@
 <template>
   <div class="user__chat--status">
-    <p class="user__chat--status-item">{{ accountJoin }} 上線</p>
+    <p class="user__chat--status-item">{{ newUser.name }} 上線</p>
   </div>
 </template>
 
 <script>
+import {mapState} from 'vuex'
+
 export default {
   name: "UserStatus",
-  props: {
-    account: {
-      type: String,
-      required: true
-    }
-  },
+  // props: {
+  //   account: {
+  //     type: String,
+  //     required: true
+  //   }
+  // },
   data() {
     return {
-      accountJoin: this.account
+      accountJoin: this.account,
+      newUser: {},
+      leaveUser:{}
     }
   },
   sockets:{
+    //TODO:待後端補狀態上線或離線，切換UI顯示
     user_leaves(data){
       console.log('logout')
-      console.log(data)
+      this.leaveUser = data
     }
+  },
+  methods: {
+    fetchNewUser() {
+      this.newUser = {...this.onlineUsers[this.onlineUsers.length - 1]}
+      console.log(this.onlineUsers[this.onlineUsers.length - 1])
+    }
+  },
+  created() {
+    this.fetchNewUser()
+  },
+  computed: {
+    ...mapState(['onlineUsers'])
   }
 };
 </script>
