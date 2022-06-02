@@ -10,6 +10,8 @@ Vue.config.productionTip = false
 
 Vue.use(new VueSocketIO({
   // debug: true,
+  
+  // connection: 'https://live-chat-app-2022.herokuapp.com',
   connection: 'http://localhost:3000',
 }))
 
