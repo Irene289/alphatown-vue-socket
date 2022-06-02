@@ -125,6 +125,11 @@ export default {
       }
     }
   },
+  sockets: {
+    user_joins(data) {
+      console.log('user_joins!!', data)
+    }
+  }
 };
 </script>
 

@@ -40,7 +40,7 @@ export default {
       // console.log(newUser)
     },
     user_joins(user) {
-      console.log(user)
+      console.log('user_joins!!', user)
     }
   }
 }
