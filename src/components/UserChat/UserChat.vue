@@ -11,31 +11,27 @@
       <div class="user__chat--container scrollbar">
         <!-- TODO: 暫填，非正確 data -->
         <div
-          v-for="user in onlineUsers"
-          :key="user.id"
+          v-for="(content, index) in contentList"
+          :key="'content'+index"
           class="user__chat--content"
         >
           <!-- user status -->
           <div class="user__chat--status">
             <!-- TODO: 使用者上下線 -->
-            <p class="user__chat--status-item">{{ user.name }} 上線</p>
+            <p v-show="content.status === 'login' " class="user__chat--status-item">{{ content.data.name }} 上線</p>
+            <p v-show="content.status === 'logout'" class="user__chat--status-item">{{ content.data.name }} 離線</p>
           </div>
           <!-- user receive -->
-          <!-- TODO: v-if user.id !== currentUser.id -->
           <div 
-            v-if="user.id !== currentUser.id"
+            v-if="content.sender.id !== currentUser.id"
             class="user__chat--receive"
           >
             <div class="user__chat--receive-img">
-              <img :src="user.avatar" alt="" />
+              <img :src="content.sender.avatar" alt="" />
             </div>
-            <div class="user__chat--receive-content">
+            <div v-show="content.message" class="user__chat--receive-content">
               <p class="content-text">
-                <!-- TODO: {{ user.msg }} -->
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Temporibus debitis dicta velit non nihil dignissimos perferendis
-                nam quaerat, vel blanditiis ex? Nobis quidem necessitatibus
-                delectus laborum ab quasi nihil corrupti.
+                {{'別人'+ content.message}}
               </p>
               <p class="content-time">
                 <!-- TODO: {{ user.createdAt }} -->
@@ -48,10 +44,10 @@
             v-else
             class="user__chat--send"
           >
-            <div class="user__chat--send-content">
+            <div v-show="content.message" class="user__chat--send-content">
               <p class="content-text">
                 <!-- TODO: {{ user.msg }} -->
-                hahahahahaha
+                {{'自己'+ content.message}}
               </p>
               <p class="content-time">
                 <!-- TODO: {{ user.createdAt }} -->
@@ -64,7 +60,7 @@
       <!--  user input -->
       <div class="user__chat--input">
         <div class="user__chat--input">
-          <input type="text" placeholder="輸入訊息..." />
+          <input  v-model="msgData.text" type="text" placeholder="輸入訊息..." />
           <button @click.stop.prevent="msgSend">
             <img src="../../assets/static/images/icon_send@2x.png" alt="" />
           </button>
@@ -84,17 +80,37 @@ export default {
     Title,
   },
   data() {
-    return {};
+    return {
+      msgData:{
+        id:'',
+        account:'',
+        name: '',
+        avatar: '',
+        text:""
+      },
+      joinUser:{},
+      logoutUser:'',
+      contentList:[],
+      contentItem:{
+        status:'',
+        data:{},
+        sender:{},
+        message:''
+      }
+    }
   },
   methods: {
     msgSend() {
-      console.log(this.msg);
-      this.$socket.emit("user send message", {
+      console.log(this.msgData);
+      this.$socket.emit("user_send_message", {
         id: this.currentUser.id,
         account: this.currentUser.account,
         name: this.currentUser.name,
         avatar: this.currentUser.avatar,
+        text: this.msgData.text
       });
+      this.msgData.text = ''
+    
     },
     fetchNewUser() {
       this.newUser = { ...this.onlineUsers[this.onlineUsers.length - 1] };
@@ -104,16 +120,44 @@ export default {
   created() {
     this.fetchNewUser();
   },
-  // methods: {
-  //   fetchUserJoins() {
-  //     // console.log('fetchUserJoins')
+  sockets: {
+    new_message: function(data){
+      this.contentItem = {
+        ...this.contentItem,
+        status:'',
+        data: '',
+        sender: data.sender,
+        message: data.message
+      }
+      this.contentList.push(this.contentItem)
+    },
+    user_leaves: function(data){
+       this.contentItem = {
+        ...this.contentItem,
+        message:'',
+        sender:{},
+        data: data.data,
+        status: data.status
+      }
+      this.contentList.push(this.contentItem)
+    },
+    user_joins: function(data){
+      this.contentItem = {
+        ...this.contentItem,
+        message:'',
+        sender:{},
+        data: data.data,
+        status: data.status
+      }
+      this.contentList.push(this.contentItem)
+      console.log('userChat', data)
+    }
 
-  //   }
-  // },
-  sockets: {},
+  },
   computed: {
     ...mapState(["onlineUsers", "currentUser"]),
   },
+  
 };
 </script>
 
