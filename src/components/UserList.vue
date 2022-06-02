@@ -46,14 +46,24 @@ export default {
   },
   methods: {
     // 登出
-    onClickLogout() {
-      this.$store.commit("revokeAuthentication");
-      localStorage.removeItem("token");
-      this.$router.push("/signin");
+    async onClickLogout() {
+      try {
+      const currentUser = await {...this.currentUser}
+
+        // console.log(currentUser)
+        // console.log(this.onlineUsers)
+        this.$store.commit("revokeAuthentication");
+        this.$socket.emit('user_logout', currentUser)
+        localStorage.removeItem("token");
+        // console.log(this.onlineUsers)
+        this.$router.push("/signin");
+      } catch (error) {
+        console.log(error)
+      }
     },
   },
   computed: {
-    ...mapState(['onlineUsers'])
+    ...mapState(['onlineUsers','currentUser'])
   }
 }
 </script>
