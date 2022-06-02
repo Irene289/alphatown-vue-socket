@@ -50,8 +50,8 @@ export default {
       const currentUser = {...this.currentUser}
       this.$store.commit("revokeAuthentication");
       this.$socket.emit('user_logout', currentUser)
-      localStorage.removeItem("token");
-      this.$router.push("/signin");
+      localStorage.removeItem("token");       
+      // this.$router.push("/signin");
     }
   },
   computed: {
