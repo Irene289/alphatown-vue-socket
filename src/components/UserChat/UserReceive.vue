@@ -8,7 +8,6 @@
       </p>
       <p class="content-time">下午11:26</p>
     </div>
-
   </div>
 </template>
 

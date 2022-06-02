@@ -1,22 +1,40 @@
 <template>
   <div class="user__chat--status">
-    <p class="user__chat--status-item">{{ accountJoin }} 上線</p>
+    <p class="user__chat--status-item">{{ newUser.name }} 上線</p>
   </div>
 </template>
 
 <script>
+import {mapState} from 'vuex'
+
 export default {
   name: "UserStatus",
-  props: {
-    account: {
-      type: String,
-      required: true
-    }
-  },
+  // props: {
+  //   account: {
+  //     type: String,
+  //     required: true
+  //   }
+  // },
   data() {
     return {
-      accountJoin: this.account
+      accountJoin: this.account,
+      newUser: {}
     }
+  },
+  // sockets: {
+    
+  // },
+  methods: {
+    fetchNewUser() {
+      this.newUser = {...this.onlineUsers[this.onlineUsers.length - 1]}
+      console.log(this.onlineUsers[this.onlineUsers.length - 1])
+    }
+  },
+  created() {
+    this.fetchNewUser()
+  },
+  computed: {
+    ...mapState(['onlineUsers'])
   }
 };
 </script>
