@@ -63,7 +63,7 @@ router.beforeEach(async(to, from, next) => {
       if (isAuthenticated && !getCurrentUser) {
         getCurrentUser = await store.dispatch('fetchCurrentUser')
         //註冊後導向首頁
-        next({ name: 'chat' })
+       router.push('/chat')
         return
       } else {
         Toast.fire({

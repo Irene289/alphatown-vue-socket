@@ -122,7 +122,9 @@ export default {
         })
         if(data.status !== 'success'){
           throw new Error (data.data.message)
-        } 
+        }
+        //socket傳送新註冊用戶資料
+        this.$socket.emit('new_user', data.data) 
         const token = data.data.token
         //註冊後直接導向首頁
         localStorage.setItem('token', token)
