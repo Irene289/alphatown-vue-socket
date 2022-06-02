@@ -18,12 +18,17 @@ export default {
   data() {
     return {
       accountJoin: this.account,
-      newUser: {}
+      newUser: {},
+      leaveUser:{}
     }
   },
-  // sockets: {
-    
-  // },
+  sockets:{
+    //TODO:待後端補狀態上線或離線，切換UI顯示
+    user_leaves(data){
+      console.log('logout')
+      this.leaveUser = data
+    }
+  },
   methods: {
     fetchNewUser() {
       this.newUser = {...this.onlineUsers[this.onlineUsers.length - 1]}

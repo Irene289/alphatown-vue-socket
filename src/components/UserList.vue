@@ -64,6 +64,12 @@ export default {
   },
   computed: {
     ...mapState(['onlineUsers','currentUser'])
+  },
+  sockets:{
+    user_leaves(data){
+      console.log('logout')
+      console.log(data)
+    }
   }
 }
 </script>
