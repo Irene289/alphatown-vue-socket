@@ -9,21 +9,19 @@
         </Title>
       </div>
       <div class="user__chat--container scrollbar">
-        <!-- TODO: 暫填，非正確 data -->
         <div
           v-for="(content, index) in contentList"
           :key="'content'+index"
           class="user__chat--content"
         >
           <!-- user status -->
-          <div class="user__chat--status">
-            <!-- TODO: 使用者上下線 -->
-            <p v-show="content.status === 'login' " class="user__chat--status-item">{{ content.data.name }} 上線</p>
+          <div v-if="!content.message" class="user__chat--status">
+            <p v-show="content.status === 'login'" class="user__chat--status-item">{{ content.data.name }} 上線</p>
             <p v-show="content.status === 'logout'" class="user__chat--status-item">{{ content.data.name }} 離線</p>
           </div>
           <!-- user receive -->
-          <div 
-            v-if="content.sender.id !== currentUser.id"
+          <div
+            v-if="content.sender.id !== currentUser.id && !content.status"
             class="user__chat--receive"
           >
             <div class="user__chat--receive-img">
@@ -31,7 +29,7 @@
             </div>
             <div v-show="content.message" class="user__chat--receive-content">
               <p class="content-text">
-                {{'別人'+ content.message}}
+                {{content.message}}
               </p>
               <p class="content-time">
                 <!-- TODO: {{ user.createdAt }} -->
@@ -41,13 +39,12 @@
           </div>
           <!-- user send -->
           <div 
-            v-else
+            v-else-if="content.sender.id === currentUser.id && !content.status"
             class="user__chat--send"
           >
             <div v-show="content.message" class="user__chat--send-content">
               <p class="content-text">
-                <!-- TODO: {{ user.msg }} -->
-                {{'自己'+ content.message}}
+                {{content.message}}
               </p>
               <p class="content-time">
                 <!-- TODO: {{ user.createdAt }} -->
@@ -62,7 +59,7 @@
         <div class="user__chat--input">
           <input  v-model="msgData.text" type="text" placeholder="輸入訊息..." />
           <button @click.stop.prevent="msgSend">
-            <img src="../../assets/static/images/icon_send@2x.png" alt="" />
+            <img src="../assets/static/images/icon_send@2x.png" alt="" />
           </button>
         </div>
       </div>
@@ -71,8 +68,9 @@
 </template>
 
 <script>
-import Title from "../Title.vue";
+import Title from "./Title.vue";
 import { mapState } from "vuex";
+import io from 'socket.io-client';
 
 export default {
   name: "UserChat",
@@ -81,6 +79,7 @@ export default {
   },
   data() {
     return {
+      socket: io(),
       msgData:{
         id:'',
         account:'',
@@ -101,7 +100,6 @@ export default {
   },
   methods: {
     msgSend() {
-      console.log(this.msgData);
       this.$socket.emit("user_send_message", {
         id: this.currentUser.id,
         account: this.currentUser.account,
@@ -110,15 +108,12 @@ export default {
         text: this.msgData.text
       });
       this.msgData.text = ''
-    
-    },
-    fetchNewUser() {
-      this.newUser = { ...this.onlineUsers[this.onlineUsers.length - 1] };
-      // console.log(this.onlineUsers[this.onlineUsers.length - 1]);
     },
   },
   created() {
-    this.fetchNewUser();
+    this.socket.on('user_joins', (data) => {
+      console.log(data)
+    })
   },
   sockets: {
     new_message: function(data){
@@ -128,6 +123,9 @@ export default {
         data: '',
         sender: data.sender,
         message: data.message
+      }
+      if (!this.contentItem.sender.avatar) {
+        this.contentItem.sender.avatar = require("../assets/static/images/alphaTown2.png")
       }
       this.contentList.push(this.contentItem)
     },
@@ -150,19 +148,16 @@ export default {
         status: data.status
       }
       this.contentList.push(this.contentItem)
-      console.log('userChat', data)
     }
-
   },
   computed: {
     ...mapState(["onlineUsers", "currentUser"]),
   },
-  
 };
 </script>
 
 <style lang="scss" scoped>
-@import "../../assets/scss/basic.scss";
+@import "../assets/scss/basic.scss";
 .container {
   padding: 0;
 }
@@ -177,7 +172,7 @@ export default {
     border-bottom: 1px solid #e6ecf0;
   }
   &--content {
-    flex: 1;
+    // flex: 1;
     padding: 7.5px 16px;
   }
   &--input {
