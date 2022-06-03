@@ -46,30 +46,16 @@ export default {
   },
   methods: {
     // 登出
-    async onClickLogout() {
-      try {
-      const currentUser = await {...this.currentUser}
-
-        // console.log(currentUser)
-        // console.log(this.onlineUsers)
-        this.$store.commit("revokeAuthentication");
-        this.$socket.emit('user_logout', currentUser)
-        localStorage.removeItem("token");
-        // console.log(this.onlineUsers)
-        this.$router.push("/signin");
-      } catch (error) {
-        console.log(error)
-      }
-    },
+    onClickLogout() {
+      const currentUser = {...this.currentUser}
+      this.$store.commit("revokeAuthentication");
+      this.$socket.emit('user_logout', currentUser)
+      localStorage.removeItem("token");       
+      // this.$router.push("/signin");
+    }
   },
   computed: {
     ...mapState(['onlineUsers','currentUser'])
-  },
-  sockets:{
-    user_leaves(data){
-      console.log('logout')
-      console.log(data)
-    }
   }
 }
 </script>

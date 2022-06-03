@@ -24,6 +24,7 @@ export default {
       console.log("連線成功")
     },
     online_users(data) {
+      console.log('signupchat',data)
       const filteredData = data.map( user => {
         if(!user.avatar) {
           return {
@@ -36,11 +37,7 @@ export default {
       })
       this.$store.commit('setOnlineUsers', filteredData)
 
-      // const newUser = filteredData.pop()
-      // console.log(newUser)
-    },
-    user_joins(user) {
-      console.log('user_joins!!', user)
+      console.log('signup',filteredData)
     }
   }
 }

@@ -113,6 +113,7 @@ export default {
         return 
       }
       try{
+        this.$socket.open()
         this.isProcessing = true
         const {data} = await authorizationAPI.signup({
           account: this.items[0].model,
@@ -123,14 +124,14 @@ export default {
         if(data.status !== 'success'){
           throw new Error (data.data.message)
         }
-        //socket傳送新註冊用戶資料
-        this.$socket.emit('new_user', data.data) 
+        // //socket傳送新註冊用戶資料
+        this.$socket.emit('user_login', data.data) 
         const token = data.data.token
         //註冊後直接導向首頁
         localStorage.setItem('token', token)
         this.$store.commit('setToken', token)
         this.$router.push('/chat')        
-        this.isProcessing = false     
+        // this.isProcessing = false     
       }catch(error){
         this.isProcessing = false   
         //重複註冊 
@@ -148,8 +149,26 @@ export default {
         }       
       }      
     }
+  },
+  sockets:{
+    online_users(data) {
+      console.log('signupdata',data)
+      const filteredData = data.map( user => {
+        if(!user.avatar) {
+          return {
+            ...user,
+            avatar: require("../assets/static/images/alphaTown2.png")
+          }
+        } else {
+          return user
+        }
+      })
+      this.$store.commit('setOnlineUsers', filteredData)  
+      console.log('signup',filteredData)
+    }
+
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

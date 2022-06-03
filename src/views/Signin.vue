@@ -108,7 +108,7 @@ export default {
 
         this.isProcessing = false
 
-        this.$socket.emit('new_user', data.data)
+        this.$socket.emit('user_login', data.data)
 
         Toast.fire({
           icon: 'success',
@@ -124,13 +124,9 @@ export default {
         })
       }
     }
-  },
-  sockets: {
-    user_joins(data) {
-      console.log('user_joins!!', data)
-    }
-  }
-};
+  }  
+}
+
 </script>
 
 <style lang="scss" scoped>

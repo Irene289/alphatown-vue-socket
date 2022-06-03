@@ -8,6 +8,7 @@ import {Toast} from '../utils/helpers'
 
 Vue.use(VueRouter)
 
+
 const routes = [
   {
     path: '/',
@@ -62,8 +63,7 @@ router.beforeEach(async(to, from, next) => {
       //已經註冊 但未取的currentUser
       if (isAuthenticated && !getCurrentUser) {
         getCurrentUser = await store.dispatch('fetchCurrentUser')
-        //註冊後導向首頁
-       router.push('/chat')
+        next()
         return
       } else {
         Toast.fire({
