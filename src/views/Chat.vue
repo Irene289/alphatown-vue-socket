@@ -26,6 +26,7 @@ export default {
     }
   },
   created() {
+    //頁面重整時需發送socket事件觸發，若沒有觸發不會回傳資料
     this.connect()
     this.getOnlineUsers(this.onlineUser)
   },

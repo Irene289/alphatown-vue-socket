@@ -148,22 +148,6 @@ export default {
         }       
       }      
     }
-  },
-  sockets:{
-    online_users(data) {
-      const filteredData = data.map( user => {
-        if(!user.avatar) {
-          return {
-            ...user,
-            avatar: require("../assets/static/images/alphaTown2.png")
-          }
-        } else {
-          return user
-        }
-      })
-      this.$store.commit('setOnlineUsers', filteredData)  
-    }
-
   }
 }
 </script>
