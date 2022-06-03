@@ -12,16 +12,28 @@
 </template>
 <script>
 import UserList from "../components/UserList.vue";
-import UserChat from "../components/UserChat/UserChat.vue";
+import UserChat from "../components/UserChat.vue";
+import { mapState } from 'vuex'
 export default {
   name: "Chat",
   components: {
     UserList,
     UserChat
   },
-  methods:{
-    getOnlineUsers(data){
-      console.log('signupchat',data)
+  data() {
+    return {
+      onlineUser: []
+    }
+  },
+  created() {
+    this.connect()
+    this.getOnlineUsers(this.onlineUser)
+  },
+  methods: {
+    connect() {
+      this.$socket.emit('user_login', this.currentUser)
+    },
+    getOnlineUsers(data) {
       const filteredData = data.map( user => {
         if(!user.avatar) {
           return {
@@ -33,32 +45,17 @@ export default {
         }
       })
       this.$store.commit('setOnlineUsers', filteredData)
-
-      console.log('signup',filteredData)
     }
   },
   sockets: {
-    connect: function() {
-      console.log("連線成功")
-    },
     online_users(data) {
       this.getOnlineUsers(data)
-      // console.log('signupchat',data)
-      // const filteredData = data.map( user => {
-      //   if(!user.avatar) {
-      //     return {
-      //       ...user,
-      //       avatar: require("../assets/static/images/alphaTown2.png")
-      //     }
-      //   } else {
-      //     return user
-      //   }
-      // })
-      // this.$store.commit('setOnlineUsers', filteredData)
-
-      // console.log('signup',filteredData)
+      this.onlineUser = [...data]
     }
-  }
+  },
+  computed: {
+    ...mapState(['onlineUsers','currentUser'])
+  },
 }
 </script>
 <style lang="scss" scoped>
