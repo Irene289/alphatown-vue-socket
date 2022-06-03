@@ -58,9 +58,7 @@ export default {
 
       // console.log('signup',filteredData)
     }
-  },
-  
-
+  }
 }
 </script>
 <style lang="scss" scoped>

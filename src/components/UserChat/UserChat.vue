@@ -150,7 +150,6 @@ export default {
         status: data.status
       }
       this.contentList.push(this.contentItem)
-      console.log('userChat', data)
     }
 
   },
