@@ -34,16 +34,6 @@ export default {
     Title,
     UserCard
   },
-  data() {
-    return {
-      users: [],
-      user: {
-        name: '',
-        account: '',
-        avatar: ''
-      }
-    }
-  },
   methods: {
     // 登出
     onClickLogout() {
@@ -51,12 +41,12 @@ export default {
       this.$store.commit("revokeAuthentication");
       this.$socket.emit('user_logout', currentUser)
       localStorage.removeItem("token");       
-      // this.$router.push("/signin");
+      this.$router.push("/signin");
     }
   },
   computed: {
     ...mapState(['onlineUsers','currentUser'])
-  }
+  },
 }
 </script>
 <style lang="scss" scoped>

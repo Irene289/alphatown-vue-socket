@@ -12,19 +12,28 @@
 </template>
 <script>
 import UserList from "../components/UserList.vue";
-import UserChat from "../components/UserChat/UserChat.vue";
+import UserChat from "../components/UserChat.vue";
+import { mapState } from 'vuex'
 export default {
   name: "Chat",
   components: {
     UserList,
     UserChat
   },
-  sockets: {
-    connect: function() {
-      console.log("連線成功")
+  data() {
+    return {
+      onlineUser: []
+    }
+  },
+  created() {
+    this.connect()
+    this.getOnlineUsers(this.onlineUser)
+  },
+  methods: {
+    connect() {
+      this.$socket.emit('user_login', this.currentUser)
     },
-    online_users(data) {
-      console.log('signupchat',data)
+    getOnlineUsers(data) {
       const filteredData = data.map( user => {
         if(!user.avatar) {
           return {
@@ -36,10 +45,17 @@ export default {
         }
       })
       this.$store.commit('setOnlineUsers', filteredData)
-
-      console.log('signup',filteredData)
     }
-  }
+  },
+  sockets: {
+    online_users(data) {
+      this.getOnlineUsers(data)
+      this.onlineUser = [...data]
+    }
+  },
+  computed: {
+    ...mapState(['onlineUsers','currentUser'])
+  },
 }
 </script>
 <style lang="scss" scoped>
