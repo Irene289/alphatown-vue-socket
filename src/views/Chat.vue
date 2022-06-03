@@ -19,11 +19,8 @@ export default {
     UserList,
     UserChat
   },
-  sockets: {
-    connect: function() {
-      console.log("連線成功")
-    },
-    online_users(data) {
+  methods:{
+    getOnlineUsers(data){
       console.log('signupchat',data)
       const filteredData = data.map( user => {
         if(!user.avatar) {
@@ -39,7 +36,31 @@ export default {
 
       console.log('signup',filteredData)
     }
-  }
+  },
+  sockets: {
+    connect: function() {
+      console.log("連線成功")
+    },
+    online_users(data) {
+      this.getOnlineUsers(data)
+      // console.log('signupchat',data)
+      // const filteredData = data.map( user => {
+      //   if(!user.avatar) {
+      //     return {
+      //       ...user,
+      //       avatar: require("../assets/static/images/alphaTown2.png")
+      //     }
+      //   } else {
+      //     return user
+      //   }
+      // })
+      // this.$store.commit('setOnlineUsers', filteredData)
+
+      // console.log('signup',filteredData)
+    }
+  },
+  
+
 }
 </script>
 <style lang="scss" scoped>
