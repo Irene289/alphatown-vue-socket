@@ -131,7 +131,6 @@ export default {
         localStorage.setItem('token', token)
         this.$store.commit('setToken', token)
         this.$router.push('/chat')        
-        // this.isProcessing = false     
       }catch(error){
         this.isProcessing = false   
         //重複註冊 
@@ -149,22 +148,6 @@ export default {
         }       
       }      
     }
-  },
-  sockets:{
-    online_users(data) {
-      const filteredData = data.map( user => {
-        if(!user.avatar) {
-          return {
-            ...user,
-            avatar: require("../assets/static/images/alphaTown2.png")
-          }
-        } else {
-          return user
-        }
-      })
-      this.$store.commit('setOnlineUsers', filteredData)  
-    }
-
   }
 }
 </script>

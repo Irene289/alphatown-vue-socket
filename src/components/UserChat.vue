@@ -8,14 +8,14 @@
           </template>
         </Title>
       </div>
-      <div class="user__chat--container scrollbar">
+      <div class="user__chat--container scrollbar" ref="chat__container" >
         <div
           v-for="(content, index) in contentList"
           :key="'content'+index"
           class="user__chat--content"
         >
           <!-- user status -->
-          <div v-if="!content.message" class="user__chat--status">
+          <div v-if="!content.message && content.status" class="user__chat--status">
             <p v-show="content.status === 'login'" class="user__chat--status-item">{{ content.data.name }} 上線</p>
             <p v-show="content.status === 'logout'" class="user__chat--status-item">{{ content.data.name }} 離線</p>
           </div>
@@ -57,7 +57,7 @@
       <!--  user input -->
       <div class="user__chat--input">
         <div class="user__chat--input">
-          <input  v-model="msgData.text" type="text" placeholder="輸入訊息..." />
+          <input  v-model.trim="msgData.text" type="text" placeholder="輸入訊息..." @keydown.enter="msgSend"/>
           <button @click.stop.prevent="msgSend">
             <img src="../assets/static/images/icon_send@2x.png" alt="" />
           </button>
@@ -109,11 +109,14 @@ export default {
       });
       this.msgData.text = ''
     },
-  },
-  created() {
-    this.socket.on('user_joins', (data) => {
-      console.log(data)
-    })
+    //每次有新訊息scroll都會自動捲至最底部，顯示新訊息
+    scrollBottom(){
+      //等畫面更新後再即時抓取屬性
+      this.$nextTick(() => {
+        let dom = this.$refs.chat__container
+        dom.scrollTop = dom.scrollHeight 
+      })
+    }
   },
   sockets: {
     new_message: function(data){
@@ -153,6 +156,9 @@ export default {
   computed: {
     ...mapState(["onlineUsers", "currentUser"]),
   },
+  updated(){
+    this.scrollBottom()
+  }
 };
 </script>
 
