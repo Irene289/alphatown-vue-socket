@@ -108,8 +108,6 @@ export default {
 
         this.isProcessing = false
 
-        this.$socket.emit('user_login', data.data)
-
         Toast.fire({
           icon: 'success',
           title: '登入成功'

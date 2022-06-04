@@ -40,8 +40,7 @@
 <script>
 import InputTitle from "../components/InputTitle";
 import InputForm from "../components/InputForm.vue";
-import authorizationAPI from "../api/authorization"
-// import userAPI from "../api/user"
+import authorizationAPI from "../apis/authorization"
 import {Toast} from "../utils/helpers"
 
 export default {
