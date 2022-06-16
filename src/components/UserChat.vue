@@ -54,7 +54,7 @@
       </div>
       <!--  user input -->
       <div class="user__chat--input">
-        <form action="" class="user__chat--input" @submit="msgSend">
+        <form action="" class="user__chat--input" @submit.stop.prevent="msgSend">
           <input v-model.trim="msgData.text" type="text" placeholder="輸入訊息..." />
           <button>
             <img src="../assets/static/images/icon_send@2x.png" alt="" />
